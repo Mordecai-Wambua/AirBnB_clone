@@ -1,21 +1,35 @@
 #!/usr/bin/env python3
 """Define class BaseModel to be inherited by other classes."""
 import uuid
-import datetime
+from datetime import datetime
 
 
 class BaseModel:
     """Define all common attributes/methods for other classes."""
 
-    def __init__(self):
-        """Initialize attributes."""
-        self.id = uuid.uuid4().hex
-        self.created_at = datetime.datetime.now()
-        self.updated_at = self.created_at
+    def __init__(self, *args, **kwargs):
+        """Initialize attributes.
+
+        Args:
+            *args: unused
+            *kwargs (dict): attribures
+        """
+        times = '%Y-%m-%dT%H:%M:%S.%f'
+        if kwargs:
+            for k, v in kwargs.items():
+                if k != '__class__':
+                    if k in ['created_at', 'updated_at']:
+                        setattr(self, k, datetime.strptime(v, times))
+                    else:
+                        setattr(self, k, v)
+        else:
+            self.id = uuid.uuid4().hex
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def save(self):
         """Update the attribute update_at with the current datetime."""
-        self.updated_at = datetime.datetime.now()
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """Return a dictionary containing all keys/values."""
@@ -27,6 +41,6 @@ class BaseModel:
 
     def __str__(self):
         """Return string representation of the class."""
-        string = "["+str(self.__class__.__name__) +"] "
-        string += "("+str(self.id)+") " + str(self.__dict__)
+        string = "[" + str(self.__class__.__name__) + "] "
+        string += "(" + str(self.id)+") " + str(self.__dict__)
         return string
