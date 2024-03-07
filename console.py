@@ -3,7 +3,7 @@
 
 
 import cmd
-class Shell(cmd.Cmd):
+class HBNBCommand(cmd.Cmd):
     """The entry point of the command interpreter."""
 
     prompt = "(hbnb) "
@@ -11,7 +11,7 @@ class Shell(cmd.Cmd):
     ruler = '='
 
     def do_quit(self, line):
-        """Command to exit cleanly."""
+        """Quit command to exit the program."""
         return True
 
     def emptyline(self):
@@ -30,6 +30,6 @@ class Shell(cmd.Cmd):
 if __name__ == '__main__':
     import sys
     if len(sys.argv) > 1:
-        Shell().onecmd(' '.join(sys.argv[1:]))
+        HBNBCommand().onecmd(' '.join(sys.argv[1:]))
     else:
-        Shell().cmdloop()
+        HBNBCommand().cmdloop()
