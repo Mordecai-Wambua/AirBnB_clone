@@ -14,12 +14,11 @@ class BaseModel:
             *args: unused
             *kwargs (dict): attribures
         """
-        times = '%Y-%m-%dT%H:%M:%S.%f'
         if kwargs:
             for k, v in kwargs.items():
                 if k != '__class__':
                     if k in ['created_at', 'updated_at']:
-                        setattr(self, k, datetime.strptime(v, times))
+                        setattr(self, k, datetime.fromisoformat(v))
                     else:
                         setattr(self, k, v)
         else:
