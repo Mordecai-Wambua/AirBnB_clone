@@ -17,9 +17,12 @@ class FileStorage:
         Args:
             obj: actual object
         """
+        pass
 
     def save(self):
         """Serializes __objects to the JSON file."""
+        pass
 
     def reload(self):
         """Deserializes the JSON file to __objects."""
+        pass
