@@ -1,53 +1,40 @@
-0x00. AirBnB clone - The console
-# AirBnB Clone
+# AirBnB Clone Project
 
-This project is a command interpreter for an Airbnb clone application. It is built using Python and focuses on creating a data model to manage the backend of the application.
+Welcome to our AirBnB clone project!
 
 ## Description
 
-The AirBnB clone is a complete web application that integrates a database to manage the backend data, a front-end to display it, and an API to allow external services to interact with the application. This repository contains the first step of the project, which is to create the data model and the command interpreter.
-
-The data model is a hierarchical mapping of JSON objects, where each object represents one of the following entities:
-
-- **BaseModel**: The base class for all other classes.
-- **User**: Represents a user of the application.
-- **State**: Represents a state or region.
-- **City**: Represents a city within a state.
-- **Amenity**: Represents an amenity that can be added to a place.
-- **Place**: Represents a physical location, such as a house or an apartment.
-- **Review**: Represents a review of a place.
-
-The command interpreter allows you to create, update, and manage objects of these classes through a command-line interface.
+This project aims to create a command-line interpreter for managing AirBnB objects. It involves implementing a parent class (BaseModel) for initialization, serialization, and deserialization of instances, as well as creating a flow of serialization/deserialization: Instance <-> Dictionary <-> JSON string <-> file.
 
 ## Command Interpreter
 
-### Starting the Command Interpreter
+### How to Start
 
-To start the command interpreter, navigate to the project directory and run the following command:
+To start the command interpreter, run the following command:
 
-This will open the command prompt `(hbnb)`.
+```bash
+$ ./console.py
 
-### Using the Command Interpreter
+## Usage
+In the interactive mode, you can use commands like:
 
-The command interpreter supports the following commands:
+- (hbnb) help
+- (hbnb) create User
+- (hbnb) show User 1234-5678
+- (hbnb) update User 1234-5678 first_name "John"
+- (hbnb) all
+- (hbnb) destroy User 1234-5678
+- (hbnb) quit
 
-- `create <class>`: Create an instance of the specified class.
-- `show <class> <id>`: Display the string representation of an instance.
-- `destroy <class> <id>`: Delete an instance from the storage.
-- `all <class>`: Display all instances of the specified class.
-- `update <class> <id> <attribute_name> <attribute_value>`: Update an instance of the specified class.
-- `quit` or `EOF`: Exit the command interpreter.
-- `help`: Display the available commands.
+In non-interactive mode, you can use:
 
-### Examples
+$ echo "help" | ./console.py
 
-Create a new `User` instance:
+## Examples
+Creating a User:
 
-## Authors
+- (hbnb) create User
 
-This project is part of the curriculum at Holberton School. The authors who contributed to this project are listed in the [AUTHORS](AUTHORS) file.
+Showing all objects:
 
-# This file lists all individuals having contributed content to the repository.
-
-Your Name <livingstoneamisi00@gmail.com>
-Collaborator 1 <mordecaingumbau@gmail.com>
+(hbnb) all
