@@ -19,14 +19,16 @@ class BaseModel:
             for k, v in kwargs.items():
                 if k != '__class__':
                     if k in ['created_at', 'updated_at']:
-                        setattr(self, k, datetime.fromisoformat(v))
+                        if isinstance(v, str):
+                            setattr(self, k, datetime.fromisoformat(v))
+                        elif isinstance(v, datetime):
+                            setattr(self, k, v)
                     else:
                         setattr(self, k, v)
         else:
             self.id = uuid.uuid4().hex
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            models.storage.new(self)
 
     def save(self):
         """Update the attribute update_at with the current datetime."""
