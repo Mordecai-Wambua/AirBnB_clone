@@ -3,9 +3,14 @@
 
 
 import cmd
-import json
 from shlex import split
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 
 
@@ -15,7 +20,8 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     doc_header = "Documented commands (type help <topic>):"
     ruler = '='
-    classes = ['BaseModel']
+    classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place',
+                'Review']
 
     def do_create(self, line):
         """Create new BaseModel instance.
@@ -88,8 +94,8 @@ class HBNBCommand(cmd.Cmd):
         if not parts:
             for instance in storage.all().values():
                 output.append(str(instance))
-                print(output)
-                return
+            print(output)
+            return
         if parts[0] not in self.__class__.classes:
             print("** class doesn't exist **")
             return
