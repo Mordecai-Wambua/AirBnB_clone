@@ -35,15 +35,13 @@ class HBNBCommand(cmd.Cmd):
             print(eval(parts[0])().id)
             storage.save()
 
-
     def do_show(self, line):
-        """Prints the string representation of an instance.
+        """Print the string representation of an instance.
 
         Args:
             line: the class name
         """
         parts = line.split()
-        
         if not parts:
             print("** class name missing **")
             return
@@ -61,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         print(storage.all()[identifier])
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id.
+        """Delete an instance based on the class name and id.
 
         Args:
             line: the class name
@@ -84,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, line):
-        """Prints all string rep of  instances based on the class name."""
+        """Print all string rep of  instances based on the class name."""
         parts = line.split()
         output = []
         if not parts:
@@ -100,10 +98,9 @@ class HBNBCommand(cmd.Cmd):
                 output.append(str(instance))
         print(output)
 
-
     def do_update(self, line):
-        """Updates an instance based on the class name and id.
-        
+        """Update an instance based on the class name and id.
+
         Usage: update <class name> <id> <attribute name> "<attribute value>"
         """
         parts = line.split()
@@ -118,8 +115,8 @@ class HBNBCommand(cmd.Cmd):
             return
         identifier = "{}.{}".format(parts[0], parts[1])
         if identifier not in storage.all():
-                print("** no instance found **")
-                return
+            print("** no instance found **")
+            return
         if len(parts) < 3:
             print("** attribute name missing **")
             return
@@ -131,8 +128,7 @@ class HBNBCommand(cmd.Cmd):
             value = parts[3]
             instance = storage.all()[identifier]
             setattr(instance, name, value)
-            storage.save()     
-
+            storage.save()
 
     def do_quit(self, line):
         """Quit command to exit the program."""
