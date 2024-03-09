@@ -3,6 +3,7 @@
 
 
 import cmd
+import models
 from shlex import split
 from models.base_model import BaseModel
 from models.user import User
@@ -48,19 +49,14 @@ class HBNBCommand(cmd.Cmd):
         parts = line.split()
         if not parts:
             print("** class name missing **")
-            return
         elif parts[0] not in self.__class__.classes:
             print("** class doesn't exist **")
-            return
         elif len(parts) < 2:
             print("** instance id missing **")
-            return
-
-        identifier = "{}.{}".format(parts[0], parts[1])
-        if identifier not in storage.all():
+        elif "{}.{}".format(parts[0], parts[1]) not in storage.all():
             print("** no instance found **")
-            return
-        print(storage.all()[identifier])
+        else:
+            print(storage.all()["{}.{}".format(parts[0], parts[1])])
 
     def do_destroy(self, line):
         """Delete an instance based on the class name and id.
@@ -71,19 +67,15 @@ class HBNBCommand(cmd.Cmd):
         parts = line.split()
         if not parts:
             print("** class name missing **")
-            return
         elif parts[0] not in self.__class__.classes:
             print("** class doesn't exist **")
-            return
         elif len(parts) < 2:
             print("** instance id missing **")
-            return
-        identifier = "{}.{}".format(parts[0], parts[1])
-        if identifier not in storage.all():
+        elif "{}.{}".format(parts[0], parts[1]) not in storage.all():
             print("** no instance found **")
-            return
-        del storage.all()[identifier]
-        storage.save()
+        else:
+            del storage.all()["{}.{}".format(parts[0], parts[1])]
+            storage.save()
 
     def do_all(self, line):
         """Print all string rep of  instances based on the class name."""
@@ -93,14 +85,13 @@ class HBNBCommand(cmd.Cmd):
             for instance in storage.all().values():
                 output.append(str(instance))
             print(output)
-            return
-        if parts[0] not in self.__class__.classes:
+        elif parts[0] not in self.__class__.classes:
             print("** class doesn't exist **")
-            return
-        for instance in storage.all().values():
-            if instance.__class__.__name__ == parts[0]:
-                output.append(str(instance))
-        print(output)
+        else:
+            for instance in storage.all().values():
+                if instance.__class__.__name__ == parts[0]:
+                    output.append(str(instance))
+                print(output)
 
     def do_update(self, line):
         """Update an instance based on the class name and id.
@@ -110,27 +101,20 @@ class HBNBCommand(cmd.Cmd):
         parts = line.split()
         if not parts:
             print("** class name missing **")
-            return
         elif parts[0] not in self.__class__.classes:
             print("** class doesn't exist **")
-            return
         elif len(parts) < 2:
             print("** instance id missing **")
-            return
-        identifier = "{}.{}".format(parts[0], parts[1])
-        if identifier not in storage.all():
+        elif "{}.{}".format(parts[0], parts[1]) not in storage.all():
             print("** no instance found **")
-            return
-        if len(parts) < 3:
+        elif len(parts) < 3:
             print("** attribute name missing **")
-            return
         elif len(parts) < 4:
             print("** value missing **")
-            return
         else:
             name = parts[2]
             value = parts[3]
-            instance = storage.all()[identifier]
+            instance = storage.all()["{}.{}".format(parts[0], parts[1])]
             setattr(instance, name, value)
             storage.save()
 
