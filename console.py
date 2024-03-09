@@ -33,10 +33,8 @@ class HBNBCommand(cmd.Cmd):
 
         if not parts:
             print("** class name missing **")
-            return
         elif parts[0] not in self.__class__.classes:
             print("** class doesn't exist **")
-            return
         else:
             print(eval(parts[0])().id)
             storage.save()
