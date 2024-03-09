@@ -23,7 +23,7 @@ class BaseModel:
                     else:
                         setattr(self, k, v)
         else:
-            self.id = uuid.uuid4().hex
+            self.id = str(uuid.uuid4().hex)
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             models.storage.new(self)
