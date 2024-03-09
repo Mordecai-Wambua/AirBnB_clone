@@ -106,8 +106,32 @@ class HBNBCommand(cmd.Cmd):
         
         Usage: update <class name> <id> <attribute name> "<attribute value>"
         """
-
-        pass     
+        parts = line.split()
+        if not parts:
+            print("** class name missing **")
+            return
+        elif parts[0] not in self.__class__.classes:
+            print("** class doesn't exist **")
+            return
+        elif len(parts) < 2:
+            print("** instance id missing **")
+            return
+        identifier = "{}.{}".format(parts[0], parts[1])
+        if identifier not in storage.all():
+                print("** no instance found **")
+                return
+        if len(parts) < 3:
+            print("** attribute name missing **")
+            return
+        elif len(parts) < 4:
+            print("** value missing **")
+            return
+        else:
+            name = parts[2]
+            value = parts[3]
+            instance = storage.all()[identifier]
+            setattr(instance, name, value)
+            storage.save()     
 
 
     def do_quit(self, line):
