@@ -15,20 +15,18 @@ class BaseModel:
             *args: unused
             *kwargs (dict): attribures
         """
-        if kwargs:
+        if len(kwargs) != 0:
             for k, v in kwargs.items():
                 if k != '__class__':
                     if k in ['created_at', 'updated_at']:
-                        if isinstance(v, str):
-                            setattr(self, k, datetime.fromisoformat(v))
-                        elif isinstance(v, datetime):
-                            setattr(self, k, v)
+                        setattr(self, k, datetime.fromisoformat(v))
                     else:
                         setattr(self, k, v)
         else:
             self.id = uuid.uuid4().hex
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def save(self):
         """Update the attribute update_at with the current datetime."""
@@ -37,7 +35,7 @@ class BaseModel:
 
     def to_dict(self):
         """Return a dictionary containing all keys/values."""
-        new = self.__dict__
+        new = self.__dict__.copy()
         new['__class__'] = self.__class__.__name__
         new['created_at'] = self.created_at.isoformat()
         new['updated_at'] = self.updated_at.isoformat()
