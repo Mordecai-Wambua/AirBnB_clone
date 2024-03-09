@@ -26,10 +26,12 @@ class BaseModel:
             self.id = uuid.uuid4().hex
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def save(self):
         """Update the attribute update_at with the current datetime."""
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Return a dictionary containing all keys/values."""
@@ -41,6 +43,9 @@ class BaseModel:
 
     def __str__(self):
         """Return string representation of the class."""
-        string = "[" + str(self.__class__.__name__) + "] "
-        string += "(" + str(self.id)+") " + str(self.__dict__)
-        return string
+        return ("[{}] {} {}".format(self.__class__.__name__,
+                self.id, self.__dict__))
+
+        #string = "[" + str(self.__class__.__name__) + "] "
+        #string += "(" + str(self.id)+") " + str(self.__dict__)
+        #return string
