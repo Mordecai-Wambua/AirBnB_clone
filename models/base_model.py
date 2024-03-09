@@ -43,7 +43,7 @@ class BaseModel:
 
     def __str__(self):
         """Return string representation of the class."""
-        return ("[{}] {} {}".format(self.__class__.__name__,
+        return ("[{}] ({}) {}".format(self.__class__.__name__,
                 self.id, self.__dict__))
 
         #string = "[" + str(self.__class__.__name__) + "] "
