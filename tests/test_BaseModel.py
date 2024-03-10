@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 from datetime import datetime
 import uuid
 
+
 class TestBaseModel(unittest.TestCase):
     """Actual tests."""
     def setUp(self):
@@ -63,6 +64,7 @@ class TestBaseModel(unittest.TestCase):
     def tearDown(self):
         del self.b
         del self.b1
+
 
 if __name__ == "__main__":
     unittest.main()
