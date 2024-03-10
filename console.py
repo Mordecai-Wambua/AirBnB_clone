@@ -22,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
     doc_header = "Documented commands (type help <topic>):"
     ruler = '='
     classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place',
-                'Review']
+               'Review']
 
     def do_create(self, line):
         """Create new BaseModel instance.
