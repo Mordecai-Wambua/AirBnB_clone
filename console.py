@@ -13,6 +13,13 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models import storage
+import re
+
+
+def processor(command):
+    check = re.search(r"([\w']+|\[[^\]]*\]|\{[^}]*\})")
+    checked = re.findall(check, command)
+    return [checked.strip(",") for i in checked]
 
 
 class HBNBCommand(cmd.Cmd):
@@ -91,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
             for instance in storage.all().values():
                 if instance.__class__.__name__ == parts[0]:
                     output.append(str(instance))
-                print(output)
+            print(output)
 
     def do_update(self, line):
         """Update an instance based on the class name and id.
@@ -117,6 +124,36 @@ class HBNBCommand(cmd.Cmd):
             instance = storage.all()["{}.{}".format(parts[0], parts[1])]
             setattr(instance, name, value)
             storage.save()
+
+    def do_count(self, line):
+        """Retrieve the number of instances of a class."""
+        parts = line.split()
+        i = 0
+        for instance in storage.all().values():
+            if instance.__class__.__name__ == parts[0]:
+                i += 1
+        print(i)
+
+    def default(self, line):
+        """Specify default behaviors for invalid inputs."""
+        commands = {
+                "all": self.do_all,
+                "show": self.do_show,
+                "destroy": self.do_destroy,
+                "update": self.do_update,
+                "count": self.do_count
+                }
+        match = re.search(r"\.", line)
+        if match is not None:
+            argl = [line[:match.span()[0]], line[match.span()[1]:]]
+            match = re.search(r"\((.*?)\)", argl[1])
+            if match is not None:
+                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
+                if command[0] in commands.keys():
+                    call = "{} {}".format(argl[0], command[1])
+                    return commands[command[0]](call)
+        print("*** Unknown syntax: {}".format(line))
+        return False
 
     def do_quit(self, line):
         """Quit command to exit the program."""
