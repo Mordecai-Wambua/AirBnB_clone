@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines the HBnB console."""
+"""The entry point of the command interpreter."""
 import cmd
 import re
 from shlex import split
@@ -32,22 +32,12 @@ def parse(arg):
 
 
 class HBNBCommand(cmd.Cmd):
-    """Defines the HolbertonBnB command interpreter.
-
-    Attributes:
-        prompt (str): The command prompt.
-    """
+    """The entry point of the command interpreter."""
 
     prompt = "(hbnb) "
-    __classes = {
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Place",
-        "Amenity",
-        "Review"
-    }
+    doc_header = "Documented commands (type help <topic>):"
+    ruler = '='
+    classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
 
     def emptyline(self):
         """Do nothing upon receiving an empty line."""
@@ -90,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
         argl = parse(arg)
         if len(argl) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
+        elif argl[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
             print(eval(argl[0])().id)
@@ -104,7 +94,7 @@ class HBNBCommand(cmd.Cmd):
         objdict = storage.all()
         if len(argl) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
+        elif argl[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         elif len(argl) == 1:
             print("** instance id missing **")
@@ -120,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
         objdict = storage.all()
         if len(argl) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
+        elif argl[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         elif len(argl) == 1:
             print("** instance id missing **")
@@ -135,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
         Display string representations of all instances of a given class.
         If no class is specified, displays all instantiated objects."""
         argl = parse(arg)
-        if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
+        if len(argl) > 0 and argl[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
             objl = []
@@ -168,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
         if len(argl) == 0:
             print("** class name missing **")
             return False
-        if argl[0] not in HBNBCommand.__classes:
+        if argl[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return False
         if len(argl) == 1:
@@ -206,5 +196,5 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     HBNBCommand().cmdloop()
